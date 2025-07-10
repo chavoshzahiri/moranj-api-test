@@ -1,25 +1,38 @@
+const express = require('express');
 const { google } = require('googleapis');
-const fs = require('fs');
 
-// لود کردن کلید دسترسی JSON
+const app = express();
+const port = process.env.PORT || 3000;
+
 const auth = new google.auth.GoogleAuth({
-  keyFile: 'moranj-orders-api-3173d622e6b8.json', // نام فایل JSON که دانلود کردی
+  keyFile: 'moranj-orders-api-3173d622e6b8.json',
   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
-async function accessSpreadsheet() {
-  const client = await auth.getClient();
-  const sheets = google.sheets({ version: 'v4', auth: client });
+app.get('/', (req, res) => {
+  res.send('Moranj API is running');
+});
 
-  const spreadsheetId = '13rUJB3bMJTNxa8T6me0E4smquB2yoQtV0IKIXHWWgaM'; 
-  const range = 'Products!A1:E10'; // محدوده‌ای که میخوای بخونی
+app.get('/products', async (req, res) => {
+  try {
+    const client = await auth.getClient();
+    const sheets = google.sheets({ version: 'v4', auth: client });
 
-  const res = await sheets.spreadsheets.values.get({
-    spreadsheetId,
-    range,
-  });
+    const spreadsheetId = '13rUJB3bMJTNxa8T6me0E4smquB2yoQtV0IKIXHWWgaM';
+    const range = 'Products!A1:E10';
 
-  console.log(res.data.values);
-}
+    const result = await sheets.spreadsheets.values.get({
+      spreadsheetId,
+      range,
+    });
 
-accessSpreadsheet();
+    res.json(result.data.values);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error accessing Google Sheets');
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server started on port ${port}`);
+});
