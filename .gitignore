@@ -1,3 +1,4 @@
 node_modules
 .env
-*.json
+# *.json
+moranj-orders-api-3173d622e6b8.json
