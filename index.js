@@ -31,7 +31,7 @@ app.get('/products', async (req, res) => {
 
     res.json(result.data.values);
   } catch (error) {
-    console.error(error);
+    console.error("Google Sheets Error:", error);
     res.status(500).send('Error accessing Google Sheets');
   }
 });
