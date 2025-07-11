@@ -3,6 +3,7 @@ const { google } = require('googleapis');
 
 const app = express();
 const port = process.env.PORT || 3000;
+console.log("GOOGLE_APPLICATION_CREDENTIALS_JSON:", process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
 
 const auth = new google.auth.GoogleAuth({
   credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON),
