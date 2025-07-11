@@ -5,8 +5,9 @@ const app = express();
 const port = process.env.PORT || 3000;
 console.log("TEST_ENV:", process.env.TEST_ENV);
 
+const decoded = Buffer.from(process.env.GOOGLE_APPLICATION_CREDENTIALS_BASE64, 'base64').toString('utf-8');
 const auth = new google.auth.GoogleAuth({
-  credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON),
+  credentials: JSON.parse(decoded),
   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
