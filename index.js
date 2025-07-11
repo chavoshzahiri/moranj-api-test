@@ -1,8 +1,8 @@
-import fetch, { Headers, Request, Response } from 'cross-fetch';
+const fetch = require('cross-fetch');
 globalThis.fetch = fetch;
-globalThis.Headers = Headers;
-globalThis.Request = Request;
-globalThis.Response = Response;
+globalThis.Headers = fetch.Headers;
+globalThis.Request = fetch.Request;
+globalThis.Response = fetch.Response;
 const express = require('express');
 const { google } = require('googleapis');
 
