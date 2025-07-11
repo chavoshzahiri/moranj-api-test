@@ -5,7 +5,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const auth = new google.auth.GoogleAuth({
-  keyFile: 'moranj-orders-api-3173d622e6b8.json',
+  credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON),
   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
